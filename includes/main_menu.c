@@ -82,14 +82,12 @@ void menu_navigation(int GAMESTATE, WINDOW** options)
             }
             }
             wattroff(options[i], COLOR_PAIR(3));
-            
-            
         }
-        keyPRESS = getch();
         
         switch(keyPRESS)
         {
             case KEY_UP:
+                wclear(options[selection]);
                 selection--;
                 if(selection < 0)
                     selection = 0;
