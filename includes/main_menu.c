@@ -60,35 +60,15 @@ void menu_navigation(int GAMESTATE, WINDOW** options)
     int keyPRESS;
     int i;
 
+    char option_text[3][18] = {"New Game", "Resume", "Exit"};
+
     while(GAMESTATE)
-    {
-        for(i = 0; i < OPTION_COUNT; i++)
-        {
-            if(i == selection)
-            {
-               wattron(options[i], COLOR_PAIR(3));
-            
-            switch (i)
-            {
-            case 0:
-                mvprintw(getbegy(options[i]) + 1, getbegx(options[i]) + 1, option1);
-                break;
-            case 1:
-                mvprintw(getbegy(options[i]) + 1, getbegx(options[i]) + 1, option2);
-                break;
-            case 2:
-                mvprintw(getbegy(options[i]) + 1, getbegx(options[i]) + 1, option3);
-                break;
-            }
-            }
-            wattroff(options[i], COLOR_PAIR(3));
-        }
-        
+    {   
+        keyPRESS = getch();
+
         switch(keyPRESS)
         {
             case KEY_UP:
-                wclear(options[selection]);
-                selection--;
                 if(selection < 0)
                     selection = 0;
                 break;
@@ -102,6 +82,10 @@ void menu_navigation(int GAMESTATE, WINDOW** options)
         if(selection == 10)
             break;
 
+        wattron(options[selection], COLOR_PAIR(3));
+        mvwprintw(options[selection], getbegy(options[selection]), getbegx(options[selection]), option_text[selection]);
+        wattroff(options[selection], COLOR_PAIR(3));
+        
         for(i = 0; i < OPTION_COUNT; i++)
             wrefresh(options[i]);
     }
