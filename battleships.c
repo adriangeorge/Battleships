@@ -1,37 +1,50 @@
 #include <stdio.h>
 #include <ncurses.h>
 #include <stdlib.h>
-#include "includes/window.h"
+#include "includes/main_menu.h"
+#include "includes/drawing.h"
 
-#define OPTION_COUNT    3
-#define SCREEN_Y        0
-#define SCREEN_X        0
-#define SCREEN_H        32
-#define SCREEN_W        128
+
 
 int main(int argc, char **argv)
 {
-    WINDOW *my_win;
-    WINDOW **options = malloc(3 * sizeof(WINDOW*));
-    WINDOW *splashScreen;
+    //window declarations
+    WINDOW *main_window;
+    //will support multiple options 
+    WINDOW *options[OPTION_COUNT];
+    WINDOW *title;
+
     initscr();
 
-    cbreak();
+    //setting up input options
+    //characters are being sent to the buffer without the need for '\n'
+    //cbreak();
+    //characters typed on the kboard are not displayed on the screen
     noecho();
+    //enables "arrow keys" support
     keypad(stdscr, TRUE);
-    curs_set(0);
+    //hides the cursor
+    curs_set(1);
+    //refreshes terminal so changes can take effect
     refresh();
-    
-    my_win = create_window(SCREEN_H, SCREEN_W, SCREEN_X, SCREEN_Y);
-    
-    
-    int iterator;
+    start_color();
+    //variable to determine which portion of the game should be displayed
+    //(eg. if the user is currently in the main menu)
+    // GAMESTATE = 0 <- QUIT
+    // GAMESTATE = 1 <- MAIN MENU
+    // GAMESTATE = 2 <- SHIP PLACEMENT
+    // GAMESTATE = 3 <- GAMEPLAY
+    // GAMESTATE = 4 <- REVEAL SHIPS @ GAME END
+    // GAMESTATE = 5 <- END OF GAME STATS
+    // GAMESTATE = 99<- WAIT
 
-    draw_buttons(options , 3 , 0 , 32, 128);
-    draw_title(splashScreen, SCREEN_Y,SCREEN_H,SCREEN_W);
-
-    iterator = getch();
-    wrefresh(my_win);
+    int GAMESTATE;
+    
+    //initial gamestate will be @ main menu
+    GAMESTATE = 1;
+    wrefresh(stdscr);
+    draw_main_menu(main_window,title,options);
+    menu_navigation(GAMESTATE,options);
     
     endwin();
     return 0;
