@@ -24,7 +24,7 @@ int main(int argc, char **argv)
     //enables "arrow keys" support
     keypad(stdscr, TRUE);
     //hides the cursor
-    curs_set(1);
+    curs_set(0);
     //refreshes terminal so changes can take effect
     refresh();
     start_color();
@@ -36,15 +36,27 @@ int main(int argc, char **argv)
     // GAMESTATE = 3 <- GAMEPLAY
     // GAMESTATE = 4 <- REVEAL SHIPS @ GAME END
     // GAMESTATE = 5 <- END OF GAME STATS
-    // GAMESTATE = 99<- WAIT
 
     int GAMESTATE;
     
     //initial gamestate will be @ main menu
-    GAMESTATE = 1;
-    wrefresh(stdscr);
-    draw_main_menu(main_window,title,options);
-    menu_navigation(GAMESTATE,options);
+    while(GAMESTATE)
+    {
+        switch (GAMESTATE)
+            {
+            case 1:
+                draw_main_menu(main_window,title,options);
+                menu_navigation(options);
+                break;
+            
+            case 2:
+                
+            }
+    }
+    
+
+    
+    
     
     endwin();
     return 0;
