@@ -1,38 +1,72 @@
 #include <stdio.h>
 #include <ncurses.h>
 #include <stdlib.h>
-#include "includes/window.h"
+#include "includes/main_menu.h"
+#include "includes/drawing.h"
+#include "includes/game_grid.h"
+#include "includes/magic_numbers.h"
 
-#define OPTION_COUNT    3
-#define SCREEN_Y        0
-#define SCREEN_X        0
-#define SCREEN_H        32
-#define SCREEN_W        128
 
 int main(int argc, char **argv)
 {
-    WINDOW *my_win;
-    WINDOW **options = malloc(3 * sizeof(WINDOW*));
-    WINDOW *splashScreen;
+    checkScreenSize();
+    //window declarations
+    WINDOW *main_window = create_main_window(MAIN_SCREEN_H,MAIN_SCREEN_W,MAIN_SCREEN_Y,MAIN_SCREEN_X);
+    //main menu related
+    WINDOW *options[OPTION_COUNT];
+    WINDOW *title;
+    //game map/ship placement related
+    WINDOW *inventory;
+    WINDOW *game_map[2];
+
     initscr();
-
+    //setting up input options
+    //characters are being sent to the buffer without the need for '\n'
     cbreak();
+    //characters typed on the kboard are not displayed on the screen
     noecho();
+    //enables "arrow keys" support
     keypad(stdscr, TRUE);
+    //hides the cursor
     curs_set(0);
-    refresh();
+    //refreshes terminal so changes can take effect
+    wrefresh(stdscr);
+    start_color();
+    // variable to determine which portion of the game should be displayed
+    // (eg. if the user is currently in the main menu)
+    // GAMESTATE = 0 <- QUIT *Done
+    // GAMESTATE = 1 <- MAIN MENU *Done 
+    // GAMESTATE = 2 <- SHIP PLACEMENT *WIP
+    // GAMESTATE = 3 <- GAMEPLAY *WIP
+    // GAMESTATE = 4 <- REVEAL SHIPS @ GAME END *WIP
+    // GAMESTATE = 5 <- END OF GAME STATS *WIP
+    int GAMESTATE = 1;
     
-    my_win = create_window(SCREEN_H, SCREEN_W, SCREEN_X, SCREEN_Y);
-    
-    
-    int iterator;
+    //initial gamestate will be @ main menu
+    //starting game loop
 
-    draw_buttons(options , 3 , 0 , 32, 128);
-    draw_title(splashScreen, SCREEN_Y,SCREEN_H,SCREEN_W);
+    int i;
+    while(GAMESTATE)
+    {
+        switch (GAMESTATE)
+            {
+            case 1:
+                draw_main_menu(title, options);
+                menu_navigation(&GAMESTATE, options);
+                break;
+            case 2:
+                while(1)
+                {
 
-    iterator = getch();
-    wrefresh(my_win);
-    
+                }
+                break;
+            
+            default:
+                break;
+            }
+
+    }
+
     endwin();
     return 0;
 }
