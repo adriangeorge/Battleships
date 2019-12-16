@@ -1,0 +1,74 @@
+Ship models
+
+1 unit = 6 cells in a 3x2 config
+
+
+1 unit ship
+
+Horizontal
+
+//	 ‗‗
+//	<▀>
+
+Vertical
+	
+//	/|\	
+//	\▀/
+
+2 unit ship
+
+Horizontal
+
+//	‗◢■──‗
+//	\____/
+
+Vertical
+
+//	 _
+//	/│\
+//	|▀|
+//	\_/
+
+3 unit ship
+
+Horizontal
+
+//	‗_◢■══__‗
+//	\_______/
+
+Vertical
+
+//	 A
+//	/ \
+//	|║|
+//	|█|
+//	|.|
+//	\_/	 
+
+4 unit ship
+
+Horizontal
+
+//	_|º¯º|__|º¯>══
+//	\__________/
+
+Vertical
+
+//	 │
+//	/║\
+//	─█─
+//	|¤|
+//	|¤|
+//	─█─
+//	─█─
+//	\_/
+
+
+
+
+
+
+
+
+
+

@@ -3,22 +3,26 @@
 #include <stdlib.h>
 #include "includes/main_menu.h"
 #include "includes/drawing.h"
-
+#include "includes/game_grid.h"
+#include "includes/magic_numbers.h"
 
 
 int main(int argc, char **argv)
 {
+    checkScreenSize();
     //window declarations
-    WINDOW *main_window;
-    //will support multiple options 
+    WINDOW *main_window = create_main_window(MAIN_SCREEN_H,MAIN_SCREEN_W,MAIN_SCREEN_Y,MAIN_SCREEN_X);
+    //main menu related
     WINDOW *options[OPTION_COUNT];
     WINDOW *title;
+    //game map/ship placement related
+    WINDOW *inventory;
+    WINDOW *game_map[2];
 
     initscr();
-
     //setting up input options
     //characters are being sent to the buffer without the need for '\n'
-    //cbreak();
+    cbreak();
     //characters typed on the kboard are not displayed on the screen
     noecho();
     //enables "arrow keys" support
@@ -26,38 +30,43 @@ int main(int argc, char **argv)
     //hides the cursor
     curs_set(0);
     //refreshes terminal so changes can take effect
-    refresh();
+    wrefresh(stdscr);
     start_color();
-    //variable to determine which portion of the game should be displayed
-    //(eg. if the user is currently in the main menu)
-    // GAMESTATE = 0 <- QUIT
-    // GAMESTATE = 1 <- MAIN MENU
-    // GAMESTATE = 2 <- SHIP PLACEMENT
-    // GAMESTATE = 3 <- GAMEPLAY
-    // GAMESTATE = 4 <- REVEAL SHIPS @ GAME END
-    // GAMESTATE = 5 <- END OF GAME STATS
-
-    int GAMESTATE;
+    // variable to determine which portion of the game should be displayed
+    // (eg. if the user is currently in the main menu)
+    // GAMESTATE = 0 <- QUIT *Done
+    // GAMESTATE = 1 <- MAIN MENU *Done 
+    // GAMESTATE = 2 <- SHIP PLACEMENT *WIP
+    // GAMESTATE = 3 <- GAMEPLAY *WIP
+    // GAMESTATE = 4 <- REVEAL SHIPS @ GAME END *WIP
+    // GAMESTATE = 5 <- END OF GAME STATS *WIP
+    int GAMESTATE = 1;
     
     //initial gamestate will be @ main menu
+    //starting game loop
+
+    int i;
     while(GAMESTATE)
     {
         switch (GAMESTATE)
             {
             case 1:
-                draw_main_menu(main_window,title,options);
-                menu_navigation(options);
+                draw_main_menu(title, options);
+                menu_navigation(&GAMESTATE, options);
+                break;
+            case 2:
+                while(1)
+                {
+
+                }
                 break;
             
-            case 2:
-                
+            default:
+                break;
             }
-    }
-    
 
-    
-    
-    
+    }
+
     endwin();
     return 0;
 }

@@ -1,5 +1,7 @@
 CC=gcc
-CFLAGS=-lncurses -o
+CFLAGS=-g -lncurses -o
+SRC=battleships.c
+INCLD=includes/drawing.c includes/main_menu.c includes/game_grid.c
 
-make: battleships.c includes/drawing.c includes/main_menu.c
-	$(CC) battleships.c includes/drawing.c includes/main_menu.c $(CFLAGS) battleships
+make: $(INCLD)
+	$(CC) $(SRC) $(INCLD) $(CFLAGS) battleships
