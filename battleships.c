@@ -5,7 +5,7 @@
 #include "includes/drawing.h"
 #include "includes/game_grid.h"
 #include "includes/magic_numbers.h"
-
+#include "includes/ships.h"
 
 int main(int argc, char **argv)
 {
@@ -16,8 +16,8 @@ int main(int argc, char **argv)
     WINDOW *options[OPTION_COUNT];
     WINDOW *title;
     //game map/ship placement related
-    WINDOW *inventory;
-    WINDOW *game_map[2];
+    WINDOW *inventory[2];
+    WINDOW *game_maps[2];
 
     initscr();
     //setting up input options
@@ -45,7 +45,12 @@ int main(int argc, char **argv)
     //initial gamestate will be @ main menu
     //starting game loop
 
-    int i;
+    ship testShip;
+    testShip.orientation = 2;
+    testShip.modules = 4;
+    testShip.Y = 5;
+    testShip.X = 5;
+
     while(GAMESTATE)
     {
         switch (GAMESTATE)
@@ -55,6 +60,9 @@ int main(int argc, char **argv)
                 menu_navigation(&GAMESTATE, options);
                 break;
             case 2:
+                draw_game_grid(game_maps);
+                draw_inventory(inventory);
+                draw_ship(game_maps[0], testShip);
                 while(1)
                 {
 
