@@ -45,7 +45,6 @@ void draw_main_menu(WINDOW* title, WINDOW** options)
 {
     start_color();
     draw_title(title);
-    wrefresh(title);
     draw_buttons(options);
 }
 
