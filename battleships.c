@@ -3,9 +3,10 @@
 #include <stdlib.h>
 #include "includes/main_menu.h"
 #include "includes/drawing.h"
+#include "includes/ships.h"
 #include "includes/game_grid.h"
 #include "includes/magic_numbers.h"
-#include "includes/ships.h"
+
 
 int main(int argc, char **argv)
 {
@@ -47,9 +48,9 @@ int main(int argc, char **argv)
 
     ship testShip;
     testShip.orientation = 2;
-    testShip.modules = 4;
-    testShip.Y = 5;
-    testShip.X = 5;
+    testShip.modules = 1;
+    testShip.Y = 1;
+    testShip.X = 1;
 
     while(GAMESTATE)
     {
@@ -62,7 +63,7 @@ int main(int argc, char **argv)
             case 2:
                 draw_game_grid(game_maps);
                 draw_inventory(inventory);
-                draw_ship(game_maps[0], testShip);
+                ship_placement(game_maps, testShip);
                 while(1)
                 {
 

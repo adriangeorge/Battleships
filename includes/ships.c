@@ -20,7 +20,7 @@ void draw_ship(WINDOW* PARENT, struct ship SHIP)
     sprintf(shipModel_path,"./res/ships/%d.%d", SHIP.modules, SHIP.orientation);
     shipModel = fopen(shipModel_path, "r");
 
-    init_pair(4, COLOR_WHITE, COLOR_CYAN);
+    init_pair(4, COLOR_WHITE, COLOR_BLUE);
     if(shipModel == NULL)
         mvwprintw(PARENT, 1,1, "ERROR READING FILE");
     else
@@ -36,7 +36,6 @@ void draw_ship(WINDOW* PARENT, struct ship SHIP)
         }
         
     }
-    
-    
+    fclose(shipModel);
     wrefresh(PARENT);
 }
