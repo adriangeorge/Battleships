@@ -3,14 +3,14 @@
 #include <stdlib.h>
 #include "includes/main_menu.h"
 #include "includes/ships.h"
-#include "includes/game_grid.h"
+#include "includes/placement.h"
 #include "includes/magic_numbers.h"
 
 
 int main(int argc, char **argv)
 {
     //window declarations
-    WINDOW *main_window = create_main_window(MAIN_SCREEN_H,MAIN_SCREEN_W,MAIN_SCREEN_Y,MAIN_SCREEN_X);
+    WINDOW *main_window;
     //main menu related
     WINDOW *options[OPTION_COUNT];
     WINDOW *title;
