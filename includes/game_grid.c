@@ -11,17 +11,14 @@ typedef struct inv
     int shipTypesDestroyed[4];
 }inv;
 
-void draw_game_grid(WINDOW** game_maps)
+void draw_game_grid(WINDOW* game_maps)
 {
     start_color();
     init_pair(1, COLOR_BLACK,COLOR_BLUE);
     init_pair(5, COLOR_BLACK,COLOR_CYAN);
-    game_maps[0] = create_window(22, 32, 2, 28);
-    game_maps[1] = create_window(22, 32, 2, 67);
-    box(game_maps[0],0,0);
-    box(game_maps[1],0,0);
-    wbkgd(game_maps[0],COLOR_PAIR(1));
-    wbkgd(game_maps[1],COLOR_PAIR(1));
+    game_maps = create_window(22, 32, 2, 28);
+    box(game_maps,0,0);
+    wbkgd(game_maps,COLOR_PAIR(1));
     int x,y;
     int flag = 0;
     for(y = 1; y < 21; y++)
@@ -30,12 +27,12 @@ void draw_game_grid(WINDOW** game_maps)
         {     
             if(flag)
             {
-                wattron(game_maps[0], COLOR_PAIR(5));
-                mvwprintw(game_maps[0], y , x, " ");
-                wattroff(game_maps[0], COLOR_PAIR(5));
+                wattron(game_maps, COLOR_PAIR(5));
+                mvwprintw(game_maps, y , x, " ");
+                wattroff(game_maps, COLOR_PAIR(5));
             }
             else
-                mvwprintw(game_maps[0], y , x , " ");
+                mvwprintw(game_maps, y , x , " ");
 
             if(x % 3 == 0)
                 flag = !flag;
@@ -43,13 +40,8 @@ void draw_game_grid(WINDOW** game_maps)
         if(y % 2 == 0)
             flag = !flag;      
     }
-    mvwprintw(game_maps[0],0, 13 , "GEORGE");
-    mvwprintw(game_maps[1],0, 7 , "COMPUTER PLAYER");
+    wrefresh(game_maps);
 
-    int i;
-    for(i = 0 ; i < 2 ; i++)
-        wrefresh(game_maps[i]);
-    refresh();
 }
 
 
@@ -68,17 +60,18 @@ void draw_inventory(WINDOW** inventory)
     }
 }
 
-void ship_placement(WINDOW** game_maps, ship selectedShip)
+void ship_placement(WINDOW* game_maps, ship selectedShip)
 {
     int keyPRESS;
-    draw_ship(game_maps[0], selectedShip);
+    draw_ship(game_maps, selectedShip);
     int orientFactor_h, orientFactor_v;
-
-   
+    int deltaMovement;
+    timeout(10);
 
     while(1)
     {
-         if(selectedShip.orientation == 1)
+        deltaMovement = selectedShip.X + selectedShip.Y;
+        if(selectedShip.orientation == 1)
         {
             orientFactor_h = selectedShip.modules * 3; 
             orientFactor_v = 2;
@@ -101,16 +94,16 @@ void ship_placement(WINDOW** game_maps, ship selectedShip)
             }
             break;
         case KEY_DOWN:
-            if(selectedShip.Y + orientFactor_v < getmaxy(game_maps[0]) - 2)
+            if(selectedShip.Y + orientFactor_v < getmaxy(game_maps) - 2)
                 selectedShip.Y += 2;
             else
-                selectedShip.Y = getmaxy(game_maps[0]) - 1 - orientFactor_v;
+                selectedShip.Y = getmaxy(game_maps) - 1 - orientFactor_v;
             break;
         case KEY_RIGHT:
-            if(selectedShip.X + orientFactor_h < getmaxx(game_maps[0]) - 2)
+            if(selectedShip.X + orientFactor_h < getmaxx(game_maps - 2))
                 selectedShip.X+= 3;
             else
-                selectedShip.X = getmaxx(game_maps[0]) - 1 - orientFactor_h;
+                selectedShip.X = getmaxx(game_maps) - 1 - orientFactor_h;
             break;
         case KEY_LEFT:
             if(selectedShip.X > 2)
@@ -128,8 +121,10 @@ void ship_placement(WINDOW** game_maps, ship selectedShip)
             break;
             
         }
-        draw_game_grid(game_maps);
-        draw_ship(game_maps[0], selectedShip);
+        if(deltaMovement != selectedShip.X + selectedShip.Y)
+        {
+            draw_game_grid(game_maps);
+        }
     }
 
       

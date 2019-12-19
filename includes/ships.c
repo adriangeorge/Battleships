@@ -16,11 +16,12 @@ void draw_ship(WINDOW* PARENT, struct ship SHIP)
     FILE *shipModel;
     char shipModel_path[18];
     char line[100];
+    use_default_colors();
     int i;
     sprintf(shipModel_path,"./res/ships/%d.%d", SHIP.modules, SHIP.orientation);
     shipModel = fopen(shipModel_path, "r");
 
-    init_pair(4, COLOR_WHITE, COLOR_BLUE);
+    init_pair(4, COLOR_WHITE, -1);
     if(shipModel == NULL)
         mvwprintw(PARENT, 1,1, "ERROR READING FILE");
     else
