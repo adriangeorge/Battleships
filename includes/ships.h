@@ -1,3 +1,5 @@
+typedef struct ship ship;
+
 typedef struct ship
 {
     int X;
@@ -7,5 +9,3 @@ typedef struct ship
     int hitModules[4];
 
 }ship;
-
-void draw_ship(WINDOW* PARENT, ship SHIP);

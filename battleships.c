@@ -1,28 +1,30 @@
 #include <stdio.h>
-#include <ncurses.h>
 #include <stdlib.h>
-#include "includes/main_menu.h"
-#include "includes/ships.h"
-#include "includes/placement.h"
+#include <ncurses.h>
+
+#include "includes/color_pairs.h"
 #include "includes/magic_numbers.h"
+#include "includes/main_menu.h"
+#include "includes/placement.h"
 
-
-int main(int argc, char **argv)
+int main()
 {
+    initscr();   
     //window declarations
-    WINDOW *main_window;
-    //main menu related
+    WINDOW *background;
+
+    //main menu window declarations
     WINDOW *options[OPTION_COUNT];
     WINDOW *title;
+    
     //game map/ship placement related
     WINDOW *inventory[2];
-    WINDOW *game_maps[2];
+    WINDOW *game_map[2];
 
-    initscr();
     //setting up input options
     //characters are being sent to the buffer without the need for '\n'
     cbreak();
-    //characters typed on the kboard are not displayed on the screen
+    //characters typed on the keyboard are not displayed on the screen
     noecho();
     //enables "arrow keys" support
     keypad(stdscr, TRUE);
@@ -30,51 +32,41 @@ int main(int argc, char **argv)
     curs_set(0);
     //refreshes terminal so changes can take effect
     wrefresh(stdscr);
-    start_color();
-    // variable to determine which portion of the game should be displayed
+
+
+    int GAMESTATE = 1;
+    // variable to determine the current status of the game
     // (eg. if the user is currently in the main menu)
-    // GAMESTATE = 0 <- QUIT *Done
+    // GAMESTATE = 0 <- QUIT/GAME END *Done
     // GAMESTATE = 1 <- MAIN MENU *Done 
     // GAMESTATE = 2 <- SHIP PLACEMENT *WIP
     // GAMESTATE = 3 <- GAMEPLAY *WIP
     // GAMESTATE = 4 <- REVEAL SHIPS @ GAME END *WIP
     // GAMESTATE = 5 <- END OF GAME STATS *WIP
-    int GAMESTATE = 1;
-    
-    //initial gamestate will be @ main menu
-    //starting game loop
+   
+    //initial GAMESTATE is will be at main menu (1)
+    //but if the player gives args at runtime
+    //game will skip to GAMESTATE 3
 
-    ship testShip;
-    testShip.orientation = 2;
-    testShip.modules = 1;
-    testShip.Y = 1;
-    testShip.X = 1;
-
+    //game loop which will stop at GAMESTATE 0
     while(GAMESTATE)
     {
         switch (GAMESTATE)
             {
             case 1:
-                draw_main_menu(title, options);
-                menu_navigation(&GAMESTATE, options);
+                menu(&GAMESTATE, options, background,  title);
                 break;
             case 2:
-                draw_game_grid(game_maps[0]);
-                draw_inventory(inventory);
-                ship_placement(game_maps[0], testShip);
-                draw_ship(game_maps[0], testShip);
+                placement(&GAMESTATE, game_map, inventory);
                 while(1)
                 {
 
                 }
                 break;
-            
             default:
                 break;
             }
-
-    }
-
+    }   
     endwin();
     return 0;
 }
