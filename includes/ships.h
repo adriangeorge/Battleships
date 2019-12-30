@@ -9,3 +9,5 @@ typedef struct ship
     int hitModules[4];
 
 }ship;
+
+void init_ships(ship* ships);

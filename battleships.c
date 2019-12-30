@@ -26,7 +26,7 @@ int main()
     cbreak();
     //characters typed on the keyboard are not displayed on the screen
     noecho();
-    //enables "arrow keys" support
+    //enables arrow keys navigation
     keypad(stdscr, TRUE);
     //hides the cursor
     curs_set(0);
@@ -58,10 +58,8 @@ int main()
                 break;
             case 2:
                 placement(&GAMESTATE, game_map, inventory);
-                while(1)
-                {
-
-                }
+                break;
+            case 3:
                 break;
             default:
                 break;

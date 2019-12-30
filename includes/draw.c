@@ -32,7 +32,6 @@ void checkScreenSize()
 
 WINDOW* create_window(int SCR_H, int SCR_W, int SCR_Y, int SCR_X, int color)
 {
-    start_color();
     color_init();
 
     WINDOW *local_win = newwin(SCR_H, SCR_W, SCR_Y, SCR_X);
@@ -65,7 +64,6 @@ void draw_title(WINDOW* TITLE_WIN)
 
 void draw_buttons(WINDOW **options)
 {
-    start_color();
     int i;
     for(i = 0 ; i < OPTION_COUNT ; i++)
         {   
@@ -106,7 +104,35 @@ WINDOW* draw_inventory(WINDOW* inventory)
     mvwprintw(inventory, 0, 21/2 - 4 , "SHIPYARD");
 }
 
-void draw_ship(WINDOW* PARENT, int Y, int X, int MODULES, int ORIENTATION)
+void draw_map_and_inventory(int deployedCount[2][4], WINDOW** game_maps, WINDOW** inventory)
+{
+    int i,j;
+    for(j = 0; j < 2; j++)
+    {
+        inventory[j] = create_window(25, 21, 2, 3 + 100*j, INVENTORY);
+        for(i = 4; i > 0; i--)
+        {
+            mvwprintw(inventory[j], 3 + (2 + 2) * (4 - i) , 2, "DEPL");
+            mvwprintw(inventory[j], 2 + (2 + 2) * (4 - i) , 2, "%d" , deployedCount[j][i - 1]);
+            draw_ship(inventory[j], 2 + (2 + 2) * (4 - i) , 7, i , 1, INVENTORY);
+
+        }
+        draw_inventory(inventory[j]);
+        wrefresh(inventory[j]);
+
+        game_maps[j] = create_window(22, 32, 2, 28 + 40 * j, GAMEGRID_BLUE);
+        if(j == 0)
+            mvwprintw(game_maps[j], 0, 1 , "PLAYER" );
+        else
+            mvwprintw(game_maps[j], 0, 1 , "COMPUTER" );
+        draw_game_grid(game_maps[j]);
+
+        wrefresh(game_maps[j]);
+
+    }
+}
+
+void draw_ship(WINDOW* PARENT, int Y, int X, int MODULES, int ORIENTATION, int COLOR)
 {
     FILE *shipModel;
     char shipModel_path[18];
@@ -121,10 +147,10 @@ void draw_ship(WINDOW* PARENT, int Y, int X, int MODULES, int ORIENTATION)
         i = 0;
         while(fgets(line , 100 , shipModel))
         {
-            //wattron(PARENT, COLOR_PAIR(SHIP_DRAW));
+            wattron(PARENT, COLOR_PAIR(COLOR));
             strtok(line, "\n");
             mvwprintw(PARENT, Y + i, X , line);
-            //wattroff(PARENT, COLOR_PAIR(SHIP_DRAW));
+            wattroff(PARENT, COLOR_PAIR(COLOR));
             i++;
         }
         

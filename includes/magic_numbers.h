@@ -19,4 +19,7 @@
 #define TITLE_TXT_COLS  69
 #define TITLE_TXT_LINES 5
 
+#define cellWidth       3
+#define cellHeight      2
+
 

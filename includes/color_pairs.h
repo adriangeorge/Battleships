@@ -7,5 +7,7 @@
 #define INVENTORY           6
 #define TITLE_BOX           7
 #define SHIP_DRAW           8
+#define PLACE_VALID         9
+#define PLACE_INVALID       10
 
 void color_init();
