@@ -1,0 +1,55 @@
+Cioban George-Adrian
+Grupa : 314CC
+
+	=======================================	
+=======	Tema 02 -  Battleships         ========
+	=======================================
+
+*battleship.c 
+
+Most of the required windows are created and the terminal is set up
+for the game (see comments for each option)
+Used GAMESTATE variable to determine in which game stage the player is currently in
+
+*draw.c 
+
+Used this implementation file to store all the draw functions for easier use
+
+*color_pairs.c 
+
+Same as draw.c , grouped all the colors for easier usage
+
+*main_menu.c 
+
+The player can pick from 3 options 
+
+New Game = Empty maps are generated and the player can pick whether to
+generate his/her map randomly or place each ship by hand 
+
+Resume = Loads the last used player map
+
+Exist = exits the game
+
+*placement.c
+
+Used to place ships randomly or manually , also places the ships for the 
+bot
+
+CONTROLS 
+
+    arrows = move the ship
+    space = change orientation
+    q = go to main main_menu
+    r = place ships randomly
+
+*ships.c 
+
+Used to store the ship struct
+
+*Gameplay
+
+CONTROLS
+
+    arrows = move the select box
+    enter = shoot at the current box
+

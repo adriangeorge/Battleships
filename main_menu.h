@@ -1,0 +1,1 @@
+void menu(int* GAMESTATE, WINDOW** options, WINDOW* background, WINDOW* title);

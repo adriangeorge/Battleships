@@ -1,7 +1,12 @@
 CC=gcc
 CFLAGS=-g -lncurses -o
-SRC=battleships.c
-INCLD=includes/draw.c includes/main_menu.c includes/placement.c includes/ships.c includes/color_pairs.c
+SRC=battleship.c
+INCLD=draw.c main_menu.c placement.c ships.c color_pairs.c gameplay.c utils.c
 
-make: $(INCLD)
-	$(CC) $(SRC) $(INCLD) $(CFLAGS) battleships
+build: $(INCLD)
+	$(CC) $(SRC) $(INCLD) $(CFLAGS) battleship
+
+run:
+	./battleship
+clean:
+	rm -rf battleship
