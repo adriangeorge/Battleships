@@ -1,6 +1,10 @@
 Cioban George-Adrian
 Grupa : 314CC
 
+
+Note: Make sure you have the NCurses library installed
+$ apt install libncurses5-dev
+
 	=======================================	
 =======	Tema 02 -  Battleships         ========
 	=======================================

@@ -85,11 +85,6 @@ int gameplay(int *GAMESTATE, WINDOW** game_maps, WINDOW* background, char* map)
         draw_game_grid(game_maps[0]);
         draw_game_grid(game_maps[1]);
         
-        for(i = 0; i < 10; i++)
-            for(j = 0; j < 10; j++)
-            {
-                mvprintw(i, j , "%d", computerARRAY[i][j]);
-            } 
 
         for(i = 0 ; i < 10 ; i++)
             {
@@ -239,6 +234,5 @@ int computerTurn(int array[10][10] , int* turn, int* counter)
             array[y][x] = 3;
             *turn = 1;
         }
-    //sleep for 3 seconds so the player can see bot hits more clearly
-    sleep(3);    
+
 }
